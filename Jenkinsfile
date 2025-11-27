@@ -2,36 +2,34 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Step 1: Checkout code from Git (simulated)'
-            }
-        }
-
         stage('Install dependencies') {
             steps {
-                echo 'Step 2: Installing dependencies (simulated, skipped)'
+                echo 'Installing dependencies...'
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run tests') {
             steps {
-                echo 'Step 3: Running tests (simulated)'
-                bat 'echo Tests executed successfully'
+                echo 'Running Python tests...'
+                bat 'pytest --junitxml=results.xml --capture=no'
             }
         }
 
         stage('Publish results') {
             steps {
-                echo 'Step 4: Publishing test results (simulated)'
+                echo 'Publishing test results...'
+                junit 'results.xml'
             }
         }
     }
 
     post {
         always {
-            echo 'Step 5: Email notification (simulated)'
-            // mail to: 'InsertYour@Mail.Here', subject: "...", body: "..."
+            echo 'Sending notification email...'
+            mail to: 'anna.fialk@gmail.com',
+                 subject: "Jenkins Build ${currentBuild.fullDisplayName}",
+                 body: "Build finished. Check results at ${env.BUILD_URL}"
         }
     }
 }
