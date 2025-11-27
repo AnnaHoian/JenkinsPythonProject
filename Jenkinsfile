@@ -5,7 +5,7 @@ pipeline {
         stage('Check Python') {
             steps {
                 echo 'Step 1: Checking Python version'
-                bat '"C:\Users\Гарбузик\PycharmProjects\random_hw_17\.venv\Scripts" --version'
+                bat '"C:\Users\Гарбузик\PycharmProjects\random_hw_17\.venv\Scripts\python.exe --version'
             }
         }
 
